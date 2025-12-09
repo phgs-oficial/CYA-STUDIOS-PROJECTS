@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8" />
+<title>Snake AI - CYA NEURAL NETWORK</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <h1>Snake AI — CYA NEURAL NETWORK</h1>
+
+  <div class="status">
+    Vitórias: <span id="wins">0</span> |
+    Mortes: <span id="deaths">0</span> |
+    treinamentos: <span id="episodes">0</span>
+  </div>
+
+  <div class="controls">
+    <button id="runBtn" class="btn">Rodar</button>
+    <button id="trainBtn" class="btn">Treinar</button>
+    <button id="stopBtn" class="btn">Parar</button>
+  </div>
+
+  <small>Dica: pressione Treinar para rodar o treino acelerado sem render (muito mais rápido). Use Rodar para ver a IA jogando.</small>
+
+  <canvas id="game" width="400" height="400"></canvas>
+  <small>este jogo que nós criamos é totalmente open-source! link: </small>
+  <small>Snake: verde<br>maçã: vermelho</small>
+<br><br><br><br><br><br><br>
+  <h3>mais como funciona???</h3>
+<p>aqui está um texto explicativo para você<br>entender.</p>
+
+<img class="imagem-explicativa" src="como funciona.png" alt="como funciona.png">
+
+<section>
+        <h2>🎮 1. O Ambiente do Jogo Snake</h2>
+        <p>Este projeto implementa uma Inteligência Artificial capaz de jogar Snake sozinha usando <b>Q-Learning</b>, uma técnica clássica de <b>Reinforcement Learning</b> (Aprendizado por Reforço).<br><br>
+        No aprendizado por reforço, o agente aprende por tentativa e erro, recebendo recompensas quando faz coisas boas e punições quando faz coisas ruins.<br><br>
+        A IA não recebe nada pronto. Ela aprende sozinha, explorando o ambiente diversas vezes até descobrir estratégias eficazes.</p>
+
+        <div class="box">
+            A cobrinha possui:<br>
+            • posição da cabeça<br>
+            • direção atual<br>
+            • corpo (lista de segmentos)<br><br>
+            A maçã aparece em posição aleatória.<br><br>
+
+            A cada passo a cobra pode:<br>
+            • continuar em frente<br>
+            • virar à esquerda<br>
+            • virar à direita<br><br>
+
+            Pegar maçã → +1 ponto<br>
+            Morrer → −1 ponto<br>
+            O jogo reinicia automaticamente após a morte.
+        </div>
+    </section>
+
+    <section>
+        <h2>🧩 2. Representação do Estado</h2>
+        <p>O estado é convertido em um vetor de 11 valores:</p>
+
+        <div class="box">
+            <b>Perigos:</b><br>
+            dangerAhead<br>
+            dangerLeft<br>
+            dangerRight<br><br>
+
+            <b>Direção atual (one-hot):</b><br>
+            dirUp, dirRight, dirDown, dirLeft<br><br>
+
+            <b>Posição relativa da fruta:</b><br>
+            fruitLeft, fruitRight, fruitUp, fruitDown
+        </div>
+    </section>
+
+    <section>
+        <h2>🧠 3. A Tabela Q</h2>
+        <p>O Q-Learning armazena valores para cada combinação <code>Q[estado][ação]</code>.<br>
+        As ações são:</p>
+
+        <div class="box">
+            STRAIGHT<br>
+            LEFT<br>
+            RIGHT
+        </div>
+
+        <p>A Q-table inicia com todos os valores zerados e é atualizada conforme a IA joga.</p>
+    </section>
+
+    <section>
+        <h2>🔁 4. Ciclo de Aprendizado</h2>
+        <p>A cada passo:</p>
+        <div class="box">
+            1. Observa o estado atual<br>
+            2. Escolhe uma ação<br>
+            3. O jogo executa<br>
+            4. Recebe recompensa e novo estado<br>
+            5. Atualiza a Q-table
+        </div>
+    </section>
+
+    <section>
+        <h2>📌 5. Equação do Q-Learning</h2>
+
+        <div class="box">
+            Q(s,a) = Q(s,a) + α * (r + γ * max(Q(s', *)) − Q(s,a))
+        </div>
+
+        <p>α = learning rate<br>
+        γ = discount factor<br><br>
+        Se a ação for boa → valor sobe.<br>
+        Se for ruim → valor cai.</p>
+    </section>
+
+    <section>
+        <h2>🎲 6. Exploration vs Exploitation (Epsilon-Greedy)</h2>
+        <p>A IA precisa explorar e também usar o que já aprendeu.</p>
+
+        <div class="box">
+            Início: EPSILON = 1.0 (100% aleatório)<br>
+            Depois: decai gradualmente até ~0.05
+        </div>
+    </section>
+
+    <section>
+        <h2>⚡ 7. Treinamento Acelerado</h2>
+        <p>Ao clicar em TREINAR:</p>
+
+        <div class="box">
+            • Canvas desligado<br>
+            • Vários passos por tick<br>
+            • Aprendizado ultra rápido<br><br>
+
+            Código usado:<br>
+            <code>for (let i=0; i&lt;LOOPS_PER_TICK; i++) { stepTrain(); }</code>
+        </div>
+    </section>
+
+    <section>
+        <h2>🖼 8. Execução Visual</h2>
+        <p>No botão RODAR, a IA demonstra o que aprendeu:</p>
+
+        <div class="box">
+            • Joga em tempo real<br>
+            • Quase nunca morre<br>
+            • Pega maçãs de forma consistente<br>
+            • Age como um jogador real
+        </div>
+    </section>
+
+    <section>
+        <h2>🧱 9. Sistema de Recompensas</h2>
+
+        <div class="box">
+            Comer maçã → +1<br>
+            Morrer → −1<br>
+            Movimento normal → 0
+        </div>
+
+        <p>Regras simples que já fazem a IA evoluir com o tempo.</p>
+    </section>
+
+    <section>
+        <h2>🏆 10. Resultado</h2>
+        <p>Depois de treinar:</p>
+
+        <div class="box">
+            • Evita paredes<br>
+            • Evita o corpo<br>
+            • Vai na fruta<br>
+            • Abre espaço para não se trancar<br>
+            • Sobrevive por longos períodos<br>
+            • Faz longas sequências de frutas
+        </div>
+    </section>
+
+    <section>
+        <h2>🎁 Conclusão</h2>
+        <p>Este projeto mostra como uma IA simples pode aprender sozinha com:</p>
+
+        <div class="box">
+            Estados simples<br>
+            Ações relativas<br>
+            Q-Learning puro<br>
+            Recompensas mínimas<br>
+            Treinamento acelerado
+        </div>
+    </section>
+
+<script src="main.js"></script>
+</body>
+                         </html>
