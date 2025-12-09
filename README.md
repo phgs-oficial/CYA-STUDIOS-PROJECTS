@@ -1,4 +1,4 @@
-#CYA STUDIOS PROJECTS
+# CYA STUDIOS PROJECTS
 
 Olá! Seja bem vindo(a)!
 
